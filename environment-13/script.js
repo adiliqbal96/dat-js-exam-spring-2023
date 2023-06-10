@@ -1,6 +1,5 @@
 "use strict";
 
-//loading global variable instead of fetching json
 let tickets = [
   { eventName: "ABJI_HYPERSUN FEAT. MORAYA", used: true, id: 1240 },
   { eventName: "ARMAND HAMMER", used: false, id: 1605 },
@@ -30,34 +29,27 @@ function displayTickets() {
 
   ticketsList.innerHTML = "";
 
-  tickets.forEach((ticket, index) => {
+  tickets.forEach((ticket) => {
     const article = document.createElement("article");
     const h3 = document.createElement("h3");
-    const p = document.createElement("p");
+    const p = document.createElement("article");
     const button = document.createElement("button");
 
     h3.textContent = ticket.eventName;
     p.textContent = `id: ${ticket.id}`;
     p.classList.add("ticketid");
 
-    //if else loop, to check if tickets are used or not after clicking the button.
-    if (ticket.used) {
-      button.textContent = "Brugt";
-      button.disabled = true;
-      article.style.backgroundColor = "gray";
-    } else {
-      button.textContent = "Brug";
-      button.disabled = false;
-    }
+    button.textContent = ticket.used ? "Brugt" : "Brug";
+    button.disabled = ticket.used;
+    article.style.backgroundColor = ticket.used ? "gray" : "";
 
     button.addEventListener("click", () => {
       console.log("Button clicked for ticket: ", ticket.id);
       ticket.used = true;
       displayTickets();
     });
-    article.appendChild(h3);
-    article.appendChild(p);
-    article.appendChild(button);
+
+    article.append(h3, p, button);
     ticketsList.appendChild(article);
   });
 }
